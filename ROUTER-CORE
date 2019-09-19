@@ -1,0 +1,77 @@
+enable
+configure terminal
+hostname ROUTER-CORE
+banner motd "ACESSO APENAS PARA PESSOAS AUTORIZADAS"
+enable secret SenhadaEnable
+ip domain-name peachanddaisy.local
+crypto key generate rsa general-keys modulus 1024
+line console 0
+password SenhadaConsole
+login local
+login
+exit
+line vty 0 15
+password SenhadaVTY
+transport input ssh
+login local
+exec-timeout 10
+exit
+username carlospaulo privilege 15 secret casatarly
+username victorsousa privilege 15 secret casatarly
+username kawanfelix privilege 15 secret casatarly
+username leonardocruz privilege 15 secret casatarly
+username arnolargani privilege 15 secret casatarly
+service password-encryption
+login block-for 180 attempts 3 within 60
+security passwords min-length 8
+interface gigabitEthernet 0/0.10
+encapsulation dot1Q 10
+ip address 172.16.0.1 255.255.248.0
+description REDE VOZ
+no shutdown
+exit
+interface gigabitEthernet 0/0.20
+encapsulation dot1Q 20
+ip address 172.16.8.1 255.255.248.0
+description REDE CONSULTORES
+exit
+interface gigabitEthernet 0/0.30
+encapsulation dot1Q 30
+ip address 172.16.16.1 255.255.254.0
+description REDE ANALISTAS
+exit
+interface gigabitEthernet 0/0.40
+encapsulation dot1Q 40
+ip address 172.16.18.1 255.255.255.128
+description REDE RH
+exit
+interface gigabitEthernet 0/0.50
+encapsulation dot1Q 50
+ip address 172.16.18.129 255.255.255.128
+description REDE ADM
+exit
+interface gigabitEthernet 0/0.60
+encapsulation dot1Q 60
+ip address 172.16.19.1 255.255.255.128
+description REDE FINANCAS
+exit
+interface gigabitEthernet 0/0.70
+encapsulation dot1Q 70
+ip address 172.16.19.129 255.255.255.128
+description REDE TI
+exit
+interface gigabitEthernet 0/0.80
+encapsulation dot1Q 80
+ip address 172.16.20.1 255.255.255.192
+description REDE 
+exit
+interface gigabitEthernet 0/0.90
+encapsulation dot1Q 90
+ip address 172.16.20.65 255.255.255.192
+description REDE QUALIDADES
+exit
+interface gigabitEthernet 0/0
+ip address 172.16.20.129 255.255.255.240
+description REDE SERVIDORES/ROUTER/SWITCHES/WIRELESSROUTER
+exit
+do wr
